@@ -1,6 +1,11 @@
 # start project:
 npm run start
 
+# libraries:
+- react;
+- react-router-dom;
+- axios;
+
 # site 
 https://www.coingecko.com
 
