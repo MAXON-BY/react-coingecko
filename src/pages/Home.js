@@ -12,7 +12,12 @@ class Home extends Component {
     };
 
     componentDidMount() {
-        axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=40&page=1&sparkline=true&price_change_percentage=1h`)
+        const URL = "https://api.coingecko.com/api/v3";
+        const MONEY = "usd";
+        const PER_PAGE = "40";
+        const PAGE = "1";
+
+        axios.get(`${URL}/coins/markets?vs_currency=${MONEY}&order=market_cap_desc&per_page=${PER_PAGE}&page=${PAGE}&sparkline=true&price_change_percentage=1h`)
             .then(res => {
                 console.log(res.data[0]);
                 this.setState({isLoading: false});
@@ -56,11 +61,16 @@ class Home extends Component {
                                             </div>
                                         </td>
                                         <td>
-                                            <span>€ ${coin.current_price}</span>
+                                            <span>${coin.current_price}</span>
                                         </td>
                                         <td>
                                             <span className={coin.price_change_percentage_1h_in_currency > 0 ? "text-green" : "text-danger"}>
-                                                {coin.price_change_percentage_1h_in_currency}%
+                                                {(coin.price_change_percentage_1h_in_currency).toFixed(1)}%
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span className={coin.price_change_percentage_24h > 0 ? "text-green" : "text-danger"}>
+                                                {(coin.price_change_percentage_24h).toFixed(1)}%
                                             </span>
                                         </td>
                                     </tr>
