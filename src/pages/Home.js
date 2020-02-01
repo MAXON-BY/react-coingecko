@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import axios from 'axios'
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import Loading from "../components/Loading/Loading";
+import {getApi} from "../api/api";
 
 class Home extends Component {
 
@@ -12,17 +12,11 @@ class Home extends Component {
     };
 
     componentDidMount() {
-        const URL = "https://api.coingecko.com/api/v3";
-        const MONEY = "usd";
-        const PER_PAGE = "40";
-        const PAGE = "1";
-
-        axios.get(`${URL}/coins/markets?vs_currency=${MONEY}&order=market_cap_desc&per_page=${PER_PAGE}&page=${PAGE}&sparkline=true&price_change_percentage=1h`)
-            .then(res => {
-                console.log(res.data[0]);
-                this.setState({isLoading: false});
-                this.setState({coins: res.data});
-            })
+        getApi.then(res => {
+            console.log(res.data[0]);
+            this.setState({isLoading: false});
+            this.setState({coins: res.data});
+        });
     }
 
 
@@ -55,7 +49,7 @@ class Home extends Component {
                                                     <img src={coin.image} alt=""/>
                                                 </div>
                                                 <div className="coin-name">
-                                                    <Link to="#">{coin.name}</Link>
+                                                    <NavLink to={`/coins/${coin.id}`}>{coin.name}</NavLink>
                                                     <span className="ml-2">({coin.symbol})</span>
                                                 </div>
                                             </div>
