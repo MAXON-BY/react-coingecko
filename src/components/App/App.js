@@ -1,9 +1,7 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom'
 import './App.css';
-import Home from "../../pages/Home";
-import Coin from "../../pages/Coin";
-import PageNotFound from "../../pages/PageNotFound";
+import {Home, Coin, PageNotFound} from "../../pages";
 
 function App() {
   return (
