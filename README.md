@@ -2,10 +2,11 @@
 npm run start
 
 # libraries:
-- react;
+- create-react-app;
 - react-router-dom;
 - axios;
-- react-moment;
+- react-moment, moment;
+- react-chartjs-2, chart.js;
 
 # site 
 https://www.coingecko.com

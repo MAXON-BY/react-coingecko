@@ -3,6 +3,7 @@ import Moment from 'react-moment';
 import './Coin.css'
 import BreadScrum from "../../components/BreadScrum/BreadScrum";
 import {congeckoGetCoinId} from "../../api";
+import GraphicInfo from "../../components/GraphicInfo/GraphicInfo";
 
 const REQUEST_FAILED = "REQUEST_FAILED";
 const SOMETHING_WENT_WRONG = "SOMETHING_WENT_WRONG";
@@ -25,7 +26,6 @@ class Coin extends Component {
         market_cap_rank: 0,
         total_supply: 0,
         circulating_supply: 0,
-        isLoading: false
     };
 
     componentDidMount(){
@@ -51,6 +51,7 @@ class Coin extends Component {
                         market_cap_rank: result.data.market_cap_rank,
                         total_supply: result.data.market_data.total_supply,
                         circulating_supply: result.data.market_data.circulating_supply,
+                        sparkline_7d: result.data.market_data.sparkline_7d.price
                     })
                 },
                 error => {
@@ -72,7 +73,8 @@ class Coin extends Component {
 
     render() {
         const {id, current_price, image, name, market_cap, total_volume, price_change_percentage_1h_in_currency,
-        low_24h, high_24h, ath, ath_change_percentage, ath_date, market_cap_rank, total_supply, circulating_supply} = this.state;
+        low_24h, high_24h, ath, ath_change_percentage, ath_date, market_cap_rank, total_supply,
+        circulating_supply, sparkline_7d} = this.state;
 
         return (
             <div className={'container'}>
@@ -88,7 +90,7 @@ class Coin extends Component {
 
                     <div className="current-coin-info-wrap">
                         <div className="current-coin-graphic">
-                            Тут типа график
+                            <GraphicInfo sparkline_7d={sparkline_7d}/>
                         </div>
                         <div className="current-coin-info">
                         <h4>БЫСТРАЯ СТАТИСТИКА</h4>
