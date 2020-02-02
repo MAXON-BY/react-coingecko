@@ -5,6 +5,7 @@ npm run start
 - react;
 - react-router-dom;
 - axios;
+- react-moment;
 
 # site 
 https://www.coingecko.com

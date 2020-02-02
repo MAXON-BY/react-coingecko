@@ -42,9 +42,7 @@ class Home extends Component {
 
 
     render() {
-
         const {coins, isLoading} = this.state;
-        console.log(coins[0])
 
         return (
             !!this.state.error
