@@ -34,7 +34,6 @@ class Coin extends Component {
         congeckoGetCoinId(id)
             .then(
                 result => {
-                    console.log(result.data);
                     this.setState({
                         id: result.data.id,
                         image: result.data.image.small,
