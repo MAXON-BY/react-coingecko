@@ -8,17 +8,15 @@ class GraphicInfo extends Component {
         type: 'line',
         options: {
             scales: {
+                title: "time",
+                type: 'time',
                 xAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'Date',
+                        labelString: '164 Hours in 7 days',
                         fontSize: 10
                     },
-                    type: 'time',
-                    time: {
-                        unit: 'day'
-                    },
-                    // responsive: true
+                    responsive: true
                 }],
                 yAxes: [
                     {
@@ -33,17 +31,21 @@ class GraphicInfo extends Component {
 
     render() {
 
+        const total_in_string = this.props.sparkline_7d ? this.props.sparkline_7d.map((item,index) => index.toString()) : 0;
+        const total_last_7d = this.props.sparkline_7d ? this.props.sparkline_7d : 0;
+        console.log(total_in_string);
+        console.log(total_last_7d);
+
         return (
             <div className={'graphic-info'}>
                 <h3>Chart Line</h3>
                 <Line
                     options={this.state.options}
                     data={{
-                        // labels - в массиве sparkline_7d 168 часов - 7 последних дней и их надо как-то вывести
-                        labels: ['1', '2', '3'] ,
+                        labels: total_in_string ,
                         datasets: [{
-                            label: 'За 7 дней',
-                            data: this.props.sparkline_7d,
+                            label: 'Total in hour',
+                            data: total_last_7d,
                             fill: 'none',
                             backgroundColor: 'blue',
                             pointRadius: 2,
