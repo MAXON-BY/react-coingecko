@@ -44,7 +44,7 @@ class GraphicInfo extends Component {
                     data={{
                         labels: total_in_string ,
                         datasets: [{
-                            label: 'Total in hour',
+                            label: '$',
                             data: total_last_7d,
                             fill: 'none',
                             backgroundColor: 'blue',
