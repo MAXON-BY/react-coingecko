@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {NavLink} from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
-import {congeckoGetSomething} from "../../api";
+import {congeckoGetPagination, congeckoGetSomething} from "../../api";
+import Pagination from "../../components/Pagination/Pagination";
 
 const tableHeaders = ["#", "Coin", "Price", "1h", "24h", "7d"];
 const REQUEST_FAILED = "REQUEST_FAILED";
@@ -13,16 +14,22 @@ class Home extends Component {
         coins: [],
         isLoading: true,
         error: "",
-        num: 0,
         currency1h: 0,
-        currency24h: 0
+        currency24h: 0,
+        totalResults: 0,
+        currentPage: 1,
+        numCoin: 0
     };
 
     componentDidMount() {
         congeckoGetSomething
             .then(
                 result => {
-                    this.setState({coins: result.data})
+                    this.setState({
+                        coins: result.data,
+                        res: result,
+                        totalResults: 260,
+                    })
                 },
                 error => {
                     this.setState({error: REQUEST_FAILED})
@@ -37,12 +44,26 @@ class Home extends Component {
                 this.setState({
                     isLoading: false
                 })
-            })
+            });
     }
 
+    nextPage = (pageNumber) => {
+        congeckoGetPagination(pageNumber)
+            .then(
+                result => {
+                    this.setState({
+                        coins: result.data,
+                        numCoin: pageNumber * 30,
+                        currentPage: pageNumber,
+                        isLoading: false,
+                    })
+                },
+            )
+    };
 
     render() {
         const {coins, isLoading} = this.state;
+        const numberPages = Math.floor(this.state.totalResults / 30);
 
         return (
             !!this.state.error
@@ -60,10 +81,10 @@ class Home extends Component {
                             </thead>
                             <tbody>
                             {
-                                coins.map((coin, num) => {
+                                coins.map((coin, numCoin) => {
                                     return (
                                         <tr key={coin.id}>
-                                            <td>{num + 1}</td>
+                                            <td>{numCoin + 1}</td>
                                             <td>
                                                 <div className="d-flex">
                                                     <div className="coin-icon">
@@ -83,7 +104,7 @@ class Home extends Component {
                                                 className={coin.price_change_percentage_1h_in_currency > 0 ? "text-green" : "text-danger"}>
                                                 {coin.price_change_percentage_1h_in_currency
                                                     ? (coin.price_change_percentage_1h_in_currency).toFixed(1)
-                                                    : this.state.currency1h }%
+                                                    : this.state.currency1h}%
                                             </span>
                                             </td>
                                             <td>
@@ -100,7 +121,13 @@ class Home extends Component {
                             }
                             </tbody>
                         </table>
-
+                        {this.state.totalResults > 1
+                            ? <Pagination
+                                pages={numberPages}
+                                nextPage={this.nextPage}
+                                currentPage={this.state.currentPage}
+                            />
+                            : ''}
                         {isLoading && <Loading/>}
                     </div>
                 </>

@@ -39,8 +39,8 @@ class GraphicInfo extends Component {
                 <Line
                     options={this.state.options}
                     data={{
-                        // labels - указать 168 часов - 7 последних дней
-                        labels: [] ,
+                        // labels - в массиве sparkline_7d 168 часов - 7 последних дней и их надо как-то вывести
+                        labels: ['1', '2', '3'] ,
                         datasets: [{
                             label: 'За 7 дней',
                             data: this.props.sparkline_7d,

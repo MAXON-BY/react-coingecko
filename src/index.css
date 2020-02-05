@@ -73,6 +73,7 @@ table thead tr th:nth-child(2) {
     margin: 0 auto;
     background-color: white;
     padding: 15px;
+    box-sizing: border-box;
 }
 
 .ml-2 {

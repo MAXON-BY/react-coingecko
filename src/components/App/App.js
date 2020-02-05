@@ -8,6 +8,7 @@ function App() {
     <div className="App">
         <Switch>
             <Route path={'/'} exact component={Home}/>
+            <Route path={'/page/:numPage'} component={Home}/>
             <Route path={'/coins/:id'} component={Coin}/>
             <Route path={'*'} component={PageNotFound} />
         </Switch>
