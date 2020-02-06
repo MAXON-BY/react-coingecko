@@ -8,12 +8,12 @@ class GraphicInfo extends Component {
         type: 'line',
         options: {
             scales: {
-                title: "time",
-                type: 'time',
+                // title: "time",
+                // type: 'time',
                 xAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: '164 Hours in 7 days',
+                        labelString: '167 Hours in 7 days',
                         fontSize: 10
                     },
                     responsive: true
@@ -31,10 +31,8 @@ class GraphicInfo extends Component {
 
     render() {
 
-        const total_in_string = this.props.sparkline_7d ? this.props.sparkline_7d.map((item,index) => index.toString()) : 0;
-        const total_last_7d = this.props.sparkline_7d ? this.props.sparkline_7d : 0;
-        console.log(total_in_string);
-        console.log(total_last_7d);
+        const total_in_hours = this.props.sparkline_7d ? this.props.sparkline_7d.map((item,index) => index.toString()) : 0;
+        const total_last_7d = this.props.sparkline_7d ? this.props.sparkline_7d.map(item => item.toFixed(4)) : 0;
 
         return (
             <div className={'graphic-info'}>
@@ -42,7 +40,7 @@ class GraphicInfo extends Component {
                 <Line
                     options={this.state.options}
                     data={{
-                        labels: total_in_string ,
+                        labels: total_in_hours,
                         datasets: [{
                             label: '$',
                             data: total_last_7d,
