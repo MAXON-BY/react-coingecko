@@ -1,3 +1,6 @@
+# App heroku
+http://react-coingecko.herokuapp.com/
+
 # start project:
 npm run start
 
@@ -7,8 +10,9 @@ npm run start
 - axios;
 - react-moment, moment;
 - react-chartjs-2, chart.js;
+- react-number-format
 
-# site 
+# site coineco
 https://www.coingecko.com
 
 # API:

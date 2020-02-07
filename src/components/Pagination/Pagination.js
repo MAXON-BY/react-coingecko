@@ -10,7 +10,7 @@ const Pagination = (props) => {
 
         pageLinks.push(
             <li key={i} className={`page-item ${active}`} onClick={()=> props.nextPage(i)}>
-                <Link to={`/page/${i}`} className={'page-link'}>
+                <Link to={`/page/${i}`}  className={'page-link'}>
                     {i}
                 </Link>
             </li>

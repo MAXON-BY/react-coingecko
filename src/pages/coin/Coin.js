@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import Moment from 'react-moment';
+import NumberFormat from "react-number-format";
 import './Coin.css'
 import BreadScrum from "../../components/BreadScrum/BreadScrum";
 import {congeckoGetCoinId} from "../../api";
 import GraphicInfo from "../../components/GraphicInfo/GraphicInfo";
+import Loading from "../../components/Loading/Loading";
 
 const REQUEST_FAILED = "REQUEST_FAILED";
 const SOMETHING_WENT_WRONG = "SOMETHING_WENT_WRONG";
@@ -26,9 +28,11 @@ class Coin extends Component {
         market_cap_rank: 0,
         total_supply: 0,
         circulating_supply: 0,
+        isLoading: true
     };
 
-    componentDidMount(){
+    componentDidMount() {
+
         const id = this.props.match.params.id;
 
         congeckoGetCoinId(id)
@@ -50,7 +54,8 @@ class Coin extends Component {
                         market_cap_rank: result.data.market_cap_rank,
                         total_supply: result.data.market_data.total_supply,
                         circulating_supply: result.data.market_data.circulating_supply,
-                        sparkline_7d: result.data.market_data.sparkline_7d.price
+                        sparkline_7d: result.data.market_data.sparkline_7d.price,
+                        isLoading: false
                     })
                 },
                 error => {
@@ -69,14 +74,21 @@ class Coin extends Component {
             })
     }
 
-
     render() {
-        const {id, current_price, image, name, market_cap, total_volume, price_change_percentage_1h_in_currency,
-        low_24h, high_24h, ath, ath_change_percentage, ath_date, market_cap_rank, total_supply,
-        circulating_supply, sparkline_7d} = this.state;
+
+        const {
+            id, current_price, image, name, market_cap, total_volume, price_change_percentage_1h_in_currency,
+            low_24h, high_24h, ath, ath_change_percentage, ath_date, market_cap_rank, total_supply,
+            circulating_supply, sparkline_7d, isLoading
+        } = this.state;
+
+        if (isLoading) {
+            return <Loading/>
+        }
 
         return (
             <div className={'container'}>
+                {isLoading && <Loading/>}
                 <BreadScrum id={id}/>
                 <div>
                     <div className="current-coin">
@@ -92,57 +104,126 @@ class Coin extends Component {
                             <GraphicInfo sparkline_7d={sparkline_7d}/>
                         </div>
                         <div className="current-coin-info">
-                        <h4>БЫСТРАЯ СТАТИСТИКА</h4>
-                        <table>
-                            <tbody>
-                            <tr>
-                                <th><strong>Курс биткоина</strong></th>
-                                <td>{current_price} $</td>
-                            </tr>
-                            <tr>
-                                <th><strong>Рыночная капитализация</strong></th>
-                                <td>{market_cap} $</td>
-                            </tr>
-                            <tr>
-                                <th><strong>Объем торгов</strong></th>
-                                <td>{total_volume} $</td>
-                            </tr>
-                            <tr>
-                                <th><strong>Объем/рын. кап.</strong></th>
-                                <td>{price_change_percentage_1h_in_currency}</td>
-                            </tr>
-                            <tr>
-                                <th><strong>Мин. курс за 24ч. / Макс. курс за 24ч.</strong></th>
-                                <td>{low_24h} $ / {high_24h} $</td>
-                            </tr>
-                            <tr>
-                                <th><strong>Абсолютный максимум</strong></th>
-                                <td>
-                                    <p>{ath}$</p>
-                                    <p>{ath_change_percentage}%</p>
-                                    <p>Date: <Moment format="D MMM YYYY" withTitle>{ath_date}</Moment></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th><strong>Рейтинг Market Cap</strong></th>
-                                <td>#{market_cap_rank}</td>
-                            </tr>
-                            <tr>
-                                <th><strong>Общее количество монет</strong></th>
-                                <td>{total_supply} штук</td>
-                            </tr>
-                            <tr>
-                                <th><strong>Сейчас в обращении</strong></th>
-                                <td>{circulating_supply} штук</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            <h4>QUICK STATS</h4>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <th><strong>Price</strong></th>
+                                    <td>
+                                        <NumberFormat
+                                            thousandSeparator={true}
+                                            suffix={' $'}
+                                            displayType={'text'}
+                                            value={current_price}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><strong>Market Cap</strong></th>
+                                    <td>
+                                        <NumberFormat
+                                            thousandSeparator={true}
+                                            suffix={' $'}
+                                            displayType={'text'}
+                                            value={market_cap}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><strong>Trading Volume</strong></th>
+                                    <td>
+                                        <NumberFormat
+                                            thousandSeparator={true}
+                                            suffix={' $'}
+                                            displayType={'text'}
+                                            value={total_volume}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><strong>Volume / Market Cap</strong></th>
+                                    <td>{price_change_percentage_1h_in_currency}</td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <p><strong>24h Low</strong></p>
+                                        <p><strong>24h High</strong></p>
+                                    </th>
+                                    <td>
+                                        <p>
+                                            <NumberFormat
+                                                thousandSeparator={true}
+                                                suffix={' $'}
+                                                displayType={'text'}
+                                                value={low_24h}
+                                            />
+                                        </p>
+                                        <p>
+                                            <NumberFormat
+                                                thousandSeparator={true}
+                                                suffix={' $'}
+                                                displayType={'text'}
+                                                value={high_24h}
+                                            />
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><strong>All-Time High</strong></th>
+                                    <td>
+                                        <p>
+                                            <NumberFormat
+                                                thousandSeparator={true}
+                                                suffix={' $'}
+                                                displayType={'text'}
+                                                value={ath}
+                                            />
+                                        </p>
+                                        <p>
+                                            <span className={ath_change_percentage > 0 ? "text-green" : "text-danger"}>
+                                                {ath_change_percentage
+                                                    ? (ath_change_percentage).toFixed(1)
+                                                    : '?'}%
+                                            </span>
+                                        </p>
+                                        <p>Date: <Moment format="D MMM YYYY" withTitle>{ath_date}</Moment></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><strong>Rank Market Cap</strong></th>
+                                    <td>#{market_cap_rank}</td>
+                                </tr>
+                                <tr>
+                                    <th><strong>Max supply</strong></th>
+                                    <td>
+                                        {total_supply
+                                            ? <NumberFormat
+                                                thousandSeparator={true}
+                                                suffix={' coins'}
+                                                displayType={'text'}
+                                                value={total_supply}/>
+                                            : '?'}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><strong>Circulating supply</strong></th>
+                                    <td>
+                                        <NumberFormat
+                                            thousandSeparator={true}
+                                            suffix={' coins'}
+                                            displayType={'text'}
+                                            value={circulating_supply}
+                                        />
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         );
     }
-};
+}
 
 export default Coin;
