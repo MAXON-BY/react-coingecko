@@ -11,6 +11,7 @@ npm run start
 - react-moment, moment;
 - react-chartjs-2, chart.js;
 - react-number-format
+- redux, react-redux
 
 # site coineco
 https://www.coingecko.com
