@@ -3,47 +3,15 @@ import {NavLink} from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
 import {congeckoGetPagination, congeckoGetCoins} from "../../api";
 import Pagination from "../../components/Pagination/Pagination";
+import {REQUEST_FAILED, SOMETHING_WENT_WRONG} from "../../api/axios/apiConstants";
+import {connect} from "react-redux";
 
 const tableHeaders = ["Coin", "Price", "1h", "24h", "7d"];
-const REQUEST_FAILED = "REQUEST_FAILED";
-const SOMETHING_WENT_WRONG = "SOMETHING_WENT_WRONG";
 
 class Home extends Component {
 
-    state = {
-        coins: [],
-        isLoading: true,
-        error: "",
-        currency1h: 0,
-        currency24h: 0,
-        totalResults: 0,
-        currentPage: 1,
-    };
-
     componentDidMount() {
-        congeckoGetCoins
-            .then(
-                result => {
-                    this.setState({
-                        coins: result.data,
-                        res: result,
-                        totalResults: 260,
-                    })
-                },
-                error => {
-                    this.setState({error: REQUEST_FAILED})
-                },
-            )
-            .catch(
-                critical => {
-                    this.setState({error: SOMETHING_WENT_WRONG})
-                }
-            )
-            .finally(() => {
-                this.setState({
-                    isLoading: false
-                })
-            });
+        congeckoGetCoins()
     }
 
     nextPage = (pageNumber) => {
@@ -63,18 +31,20 @@ class Home extends Component {
     };
 
     render() {
-        const {coins, isLoading} = this.state;
-        const numberPages = Math.floor(this.state.totalResults / 30);
+        const {coins, isLoading} = this.props;
+        const numberPages = Math.floor(this.props.totalResults / 30);
+
+        console.log(this.props)
 
         if (isLoading){
             return <Loading/>
         }
 
         return (
-            !!this.state.error
+            !!this.props.error
                 ? <>
-                    {this.state.error === REQUEST_FAILED && <div>{REQUEST_FAILED}</div>}
-                    {this.state.error === REQUEST_FAILED && <div>{SOMETHING_WENT_WRONG}</div>}
+                    {this.props.error === REQUEST_FAILED && <div>{REQUEST_FAILED}</div>}
+                    {this.props.error === SOMETHING_WENT_WRONG && <div>{SOMETHING_WENT_WRONG}</div>}
                 </>
                 : <>
                     <div className={'container'}>
@@ -126,11 +96,11 @@ class Home extends Component {
                             }
                             </tbody>
                         </table>
-                        {this.state.totalResults > 30
+                        {this.props.totalResults > 30
                             ? <Pagination
                                 pages={numberPages}
                                 nextPage={this.nextPage}
-                                currentPage={this.state.currentPage}
+                                currentPage={this.props.currentPage}
                             />
                             : ''}
                     </div>
@@ -139,4 +109,10 @@ class Home extends Component {
     }
 }
 
-export default Home;
+const mapStateToProps = (store) => {
+    return{
+        coins: store.coinState.coins
+    }
+}
+
+export default connect(mapStateToProps)(Home);
