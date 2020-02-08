@@ -10,14 +10,15 @@ npm run start
 - axios;
 - react-moment, moment;
 - react-chartjs-2, chart.js;
-- react-number-format
-- redux, react-redux
+- react-number-format;
+- redux, react-redux;
+- redux-devtools-extension;
 
-# site coineco
+# Site coineco
 https://www.coingecko.com
 
-# API:
+# API coineco:
 https://www.coingecko.com/en/api#explore-api
 
-# github:
+# Github APP:
 https://github.com/MAXON-BY/react-coingecko.git

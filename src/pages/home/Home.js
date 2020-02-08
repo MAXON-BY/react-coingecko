@@ -29,7 +29,7 @@ class Home extends Component {
             return <Loading/>
         }
 
-        console.log('isLoading', isLoading)
+        console.log('isLoading', isLoading);
 
         return (
             !!this.props.error
@@ -37,6 +37,7 @@ class Home extends Component {
                     {this.props.error === REQUEST_FAILED && <div>{REQUEST_FAILED}</div>}
                     {this.props.error === SOMETHING_WENT_WRONG && <div>{SOMETHING_WENT_WRONG}</div>}
                 </div>
+
                 : <div className={'container'}>
                     <table>
                         <thead>
