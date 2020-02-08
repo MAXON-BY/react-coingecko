@@ -3,32 +3,6 @@ import './GraphicInfo.css'
 import {Line} from "react-chartjs-2";
 
 class GraphicInfo extends Component {
-
-    state = {
-        type: 'line',
-        options: {
-            scales: {
-                // title: "time",
-                // type: 'time',
-                xAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: '167 Hours in 7 days',
-                        fontSize: 10
-                    },
-                    responsive: true
-                }],
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: false
-                        }
-                    }
-                ]
-            }
-        }
-    };
-
     render() {
 
         const total_in_hours = this.props.sparkline_7d ? this.props.sparkline_7d.map((item,index) => index.toString()) : 0;
@@ -38,7 +12,6 @@ class GraphicInfo extends Component {
             <div className={'graphic-info'}>
                 <h3>Chart Line</h3>
                 <Line
-                    options={this.state.options}
                     data={{
                         labels: total_in_hours,
                         datasets: [{
@@ -53,6 +26,7 @@ class GraphicInfo extends Component {
                         }]
                     }}
                 />
+                <p>168 Hours in 7 days; 0 - week (7 days ago); 168 - just now</p>
             </div>
         );
     }

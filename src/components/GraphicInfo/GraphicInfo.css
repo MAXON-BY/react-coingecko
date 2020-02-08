@@ -1,3 +1,10 @@
 .graphic-info{
     padding-right: 20px;
 }
+.graphic-info p{
+    text-align: center;
+    font-weight: bold;
+    padding-top: 5px;
+    font-size: 12px;
+    color: darkslateblue;
+}
