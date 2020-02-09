@@ -33,9 +33,9 @@ export function getCoinPagination(pageNumber, coins) {
     }
 }
 
-export function getCoinId(id) {
+export function getCoinId(coinId) {
     return{
         type: types.GET_COIN_ID,
-        id: id
+        coinId: coinId
     }
 }

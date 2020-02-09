@@ -6,7 +6,7 @@ const congeckoGetCoinId = (id) => {
     return coingeckoAPI.get(`/coins/${id}?sparkline=true`)
         .then(
             result => {
-                store.dispatch(getCoinId(id, result.data))
+                store.dispatch(getCoinId(result.data))
             }
         )
 };

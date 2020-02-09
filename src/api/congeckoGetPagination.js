@@ -1,6 +1,6 @@
 import {coingeckoAPI} from "./axios";
 import {MONEY, SORT} from "./axios/apiConstants";
-import {getCoinFailed, getCoinFinally, getCoinPagination, getCoinWrong} from "../actions/actionCoin";
+import {getCoinFailed, getCoinPagination} from "../actions/actionCoin";
 import store from "../store/store";
 
 const congeckoGetPagination  = (pageNumber) => {
@@ -11,17 +11,10 @@ const congeckoGetPagination  = (pageNumber) => {
                 store.dispatch(getCoinPagination(pageNumber, result.data))
             },
             error => {
-                store.dispatch(getCoinFailed())
+                store.dispatch(getCoinFailed());
+                console.log(error)
             },
         )
-        .catch(
-            critical => {
-                store.dispatch(getCoinWrong())
-            }
-        )
-        .finally(()=>{
-            store.dispatch(getCoinFinally())
-        })
 };
 
 export default congeckoGetPagination

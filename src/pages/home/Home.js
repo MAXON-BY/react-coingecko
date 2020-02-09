@@ -15,9 +15,6 @@ class Home extends Component {
     }
 
     nextPage = (pageNumber) => {
-        // this.setState({
-        //     isLoading: true
-        // });
         congeckoGetPagination(pageNumber)
     };
 
