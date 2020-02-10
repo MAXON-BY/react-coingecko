@@ -13,6 +13,7 @@ npm run start
 - react-number-format;
 - redux, react-redux;
 - redux-devtools-extension;
+- redux-thunk
 
 # Site coineco
 https://www.coingecko.com

@@ -39,7 +39,7 @@ class Coin extends Component {
                     </div>
 
                     <hr/>
-                    {/*TODO сделай функцию возвращающую таблицу!!!*/}
+
                     <div className="current-coin-info-wrap">
                         <div className="current-coin-graphic">
                             <GraphicInfo sparkline_7d={sparkline_7d}/>

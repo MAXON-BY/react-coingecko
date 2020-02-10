@@ -26,7 +26,6 @@ const initialState = {
             market_cap_rank: 0,
             total_supply: 0,
             circulating_supply: 0,
-            isLoading: true
         }
 };
 
@@ -47,14 +46,14 @@ const coinReducer = (state = initialState, action) =>{
                 ...state,
                 error: SOMETHING_WENT_WRONG,
             };
-            //TODO переименовать! получить монету меняет статус загрузки...
-        case types.GET_COIN_FINALLY:
-            console.log('GET_COIN_FINALLY')
+        case types.GET_COIN_STATUS_LOADING:
+            console.log('GET_COIN_STATUS_LOADING');
             return {
                 ...state,
                 isLoading: false
             };
         case types.GET_COIN_PAGINATION:
+            console.log('GET_COIN_PAGINATION')
             return {
                 ...state,
                 coins: action.coins,
@@ -63,6 +62,7 @@ const coinReducer = (state = initialState, action) =>{
         case types.GET_COIN_ID:
             return {
                 ...state,
+                isLoading: true,
                 coinId: {
                     id: action.coinId.id,
                     image: action.coinId.image.small,
@@ -80,7 +80,6 @@ const coinReducer = (state = initialState, action) =>{
                     total_supply: action.coinId.market_data.total_supply,
                     circulating_supply: action.coinId.market_data.circulating_supply,
                     sparkline_7d: action.coinId.market_data.sparkline_7d.price,
-                    isLoading: false
                 },
 
             };

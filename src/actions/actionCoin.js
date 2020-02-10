@@ -6,7 +6,7 @@ export const getCoinFailed = () => ({ type: types.GET_COIN_FAILED });
 
 export const getCoinWrong = () => ({ type: types.GET_COIN_SOMETHING_WRONG });
 
-export const getCoinFinally = () => ({ type: types.GET_COIN_FINALLY });
+export const getCoinFinally = () => ({ type: types.GET_COIN_STATUS_LOADING });
 
 export const getCoinPagination = (pageNumber, coins) => ({
         type: types.GET_COIN_PAGINATION,
