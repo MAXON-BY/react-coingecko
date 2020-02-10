@@ -1,20 +1,20 @@
 import {coingeckoAPI} from "./axios";
 import {MONEY, SORT} from "./axios/apiConstants";
-import {getCoinFailed, getCoinPagination} from "../actions/actionCoin";
-import store from "../store/store";
+import {getCoinFailed, getCoinFinally, getCoinPagination} from "../actions/actionCoin";
 
-const congeckoGetPagination  = (pageNumber) => {
+const congeckoGetPagination  = (pageNumber) => dispatch => {
 
     return coingeckoAPI.get(`/coins/markets?vs_currency=${MONEY}&order=${SORT}&per_page=30&page=${pageNumber}&price_change_percentage=1h`)
         .then(
             result => {
-                store.dispatch(getCoinPagination(pageNumber, result.data))
+                dispatch(getCoinPagination(pageNumber, result.data))
             },
             error => {
-                store.dispatch(getCoinFailed());
+                dispatch(getCoinFailed());
                 console.log(error)
             },
         )
+        .finally(() => dispatch(getCoinFinally()))
 };
 
 export default congeckoGetPagination

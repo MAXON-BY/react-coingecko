@@ -12,7 +12,7 @@ class Coin extends Component {
 
     componentDidMount() {
         const id = this.props.match.params.id;
-        congeckoGetCoinId(id)
+        this.props.congeckoGetCoinId(id)
     }
 
     render() {
@@ -39,7 +39,7 @@ class Coin extends Component {
                     </div>
 
                     <hr/>
-
+                    {/*TODO сделай функцию возвращающую таблицу!!!*/}
                     <div className="current-coin-info-wrap">
                         <div className="current-coin-graphic">
                             <GraphicInfo sparkline_7d={sparkline_7d}/>
@@ -189,4 +189,4 @@ const mapStateToProps = (store) => {
     }
 };
 
-export default connect(mapStateToProps)(Coin);
+export default connect(mapStateToProps, { congeckoGetCoinId })(Coin);

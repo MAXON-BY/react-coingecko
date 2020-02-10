@@ -1,14 +1,14 @@
 import {coingeckoAPI} from "./axios";
-import store from "../store/store";
-import {getCoinId} from "../actions/actionCoin";
+import {getCoinFinally, getCoinId} from "../actions/actionCoin";
 
-const congeckoGetCoinId = (id) => {
+const congeckoGetCoinId = (id) => dispatch => {
     return coingeckoAPI.get(`/coins/${id}?sparkline=true`)
         .then(
             result => {
-                store.dispatch(getCoinId(result.data))
+                dispatch(getCoinId(result.data))
             }
         )
+        .finally(() => dispatch(getCoinFinally()))
 };
 
 export default congeckoGetCoinId

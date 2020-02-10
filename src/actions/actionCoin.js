@@ -1,41 +1,16 @@
 import * as types from "./actionTypes";
 
-export function getCoinSuccess(coins) {
-    return{
-        type: types.GET_COIN_SUCCESS,
-        coins: coins
-    }
-}
+export const getCoinSuccess = coins => ({ type: types.GET_COIN_SUCCESS, coins});
 
-export function getCoinFailed() {
-    return{
-        type: types.GET_COIN_FAILED
-    }
-}
+export const getCoinFailed = () => ({ type: types.GET_COIN_FAILED });
 
-export function getCoinWrong() {
-    return{
-        type: types.GET_COIN_SOMETHING_WRONG
-    }
-}
+export const getCoinWrong = () => ({ type: types.GET_COIN_SOMETHING_WRONG });
 
-export function getCoinFinally() {
-    return{
-        type: types.GET_COIN_FINALLY
-    }
-}
+export const getCoinFinally = () => ({ type: types.GET_COIN_FINALLY });
 
-export function getCoinPagination(pageNumber, coins) {
-    return{
+export const getCoinPagination = (pageNumber, coins) => ({
         type: types.GET_COIN_PAGINATION,
-        currentPage: pageNumber,
-        coins: coins,
-    }
-}
+        pageNumber, coins
+});
 
-export function getCoinId(coinId) {
-    return{
-        type: types.GET_COIN_ID,
-        coinId: coinId
-    }
-}
+export const getCoinId = coinId => ({ type: types.GET_COIN_ID, coinId: coinId });

@@ -30,7 +30,7 @@ const initialState = {
         }
 };
 
-export default function coinReducer(state = initialState, action){
+const coinReducer = (state = initialState, action) =>{
     switch (action.type) {
         case types.GET_COIN_SUCCESS:
             return {
@@ -47,7 +47,9 @@ export default function coinReducer(state = initialState, action){
                 ...state,
                 error: SOMETHING_WENT_WRONG,
             };
+            //TODO переименовать! получить монету меняет статус загрузки...
         case types.GET_COIN_FINALLY:
+            console.log('GET_COIN_FINALLY')
             return {
                 ...state,
                 isLoading: false
@@ -86,4 +88,7 @@ export default function coinReducer(state = initialState, action){
         default:
             return state;
     }
-}
+};
+
+export default coinReducer
+

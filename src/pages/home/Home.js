@@ -11,11 +11,11 @@ const tableHeaders = ["Coin", "Price", "1h", "24h", "7d"];
 class Home extends Component {
 
     componentDidMount() {
-        congeckoGetCoins()
+        this.props.congeckoGetCoins()
     }
 
     nextPage = (pageNumber) => {
-        congeckoGetPagination(pageNumber)
+        this.props.congeckoGetPagination(pageNumber)
     };
 
     render() {
@@ -106,4 +106,4 @@ const mapStateToProps = (store) => {
     }
 };
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, { congeckoGetCoins, congeckoGetPagination })(Home);
