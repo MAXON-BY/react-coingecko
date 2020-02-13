@@ -3,6 +3,8 @@
     color: darkgray;
     margin: 0 0 20px;
 }
-.breadscrum a{
+.breadscrum span{
     color: cornflowerblue;
+    cursor: pointer;
+    font-weight: bold;
 }

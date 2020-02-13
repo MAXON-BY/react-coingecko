@@ -1,6 +1,6 @@
 import React from 'react';
 import './Pagination.css'
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 const Pagination = (props) => {
     const pageLinks = [];
@@ -10,9 +10,9 @@ const Pagination = (props) => {
 
         pageLinks.push(
             <li key={i} className={`page-item ${active}`} onClick={()=> props.nextPage(i)}>
-                <Link to={`/page/${i}`}  className={'page-link'}>
+                <NavLink to={`/page/${i}`}  className={'page-link'}>
                     {i}
-                </Link>
+                </NavLink>
             </li>
         )
     }

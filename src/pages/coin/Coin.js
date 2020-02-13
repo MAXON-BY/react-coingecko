@@ -29,8 +29,11 @@ class Coin extends Component {
 
         return (
             <div className={'container'}>
+
                 {isLoading && <Loading/>}
-                <BreadScrum id={id}/>
+
+                <BreadScrum history={this.props} id={id}/>
+
                 <div>
                     <div className="current-coin">
                         <img src={image} alt=""/>

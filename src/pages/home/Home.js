@@ -5,17 +5,20 @@ import {congeckoGetPagination, congeckoGetCoins} from "../../api";
 import Pagination from "../../components/Pagination/Pagination";
 import {REQUEST_FAILED, SOMETHING_WENT_WRONG} from "../../api/axios/apiConstants";
 import {connect} from "react-redux";
+import {toggleLoading} from "../../actions/actionCoin";
 
 const tableHeaders = ["Coin", "Price", "1h", "24h", "7d"];
 
 class Home extends Component {
 
     componentDidMount() {
+        this.props.toggleLoading(true);
         this.props.congeckoGetCoins()
     }
 
-    nextPage = (pageNumber) => {
-        this.props.congeckoGetPagination(pageNumber)
+    nextPage = (currentPage) => {
+        this.props.toggleLoading(true);
+        this.props.congeckoGetPagination(currentPage)
     };
 
     render() {
@@ -25,8 +28,6 @@ class Home extends Component {
         if (isLoading) {
             return <Loading/>
         }
-
-        console.log('isLoading', isLoading);
 
         return (
             !!this.props.error
@@ -90,7 +91,7 @@ class Home extends Component {
                             nextPage={this.nextPage}
                             currentPage={this.props.currentPage}
                         />
-                        : ''}
+                        : null}
                 </div>
         );
     }
@@ -106,4 +107,4 @@ const mapStateToProps = (store) => {
     }
 };
 
-export default connect(mapStateToProps, { congeckoGetCoins, congeckoGetPagination })(Home);
+export default connect(mapStateToProps, { congeckoGetCoins, congeckoGetPagination, toggleLoading })(Home);

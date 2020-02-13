@@ -35,6 +35,9 @@ const coinReducer = (state = initialState, action) =>{
             return {
                 ...state,
                 coins: action.coins,
+                coinId: {
+                    isLoading: true,
+                },
             };
         case types.GET_COIN_FAILED:
             return {
@@ -46,23 +49,25 @@ const coinReducer = (state = initialState, action) =>{
                 ...state,
                 error: SOMETHING_WENT_WRONG,
             };
-        case types.GET_COIN_STATUS_LOADING:
-            console.log('GET_COIN_STATUS_LOADING');
+        case types.GET_COIN_FINISH:
             return {
                 ...state,
                 isLoading: false
             };
         case types.GET_COIN_PAGINATION:
-            console.log('GET_COIN_PAGINATION')
             return {
                 ...state,
                 coins: action.coins,
                 currentPage: action.currentPage,
             };
+        case types.TOGGLE_LOADING:
+            return {
+                ...state,
+                isLoading: action.isLoading,
+            };
         case types.GET_COIN_ID:
             return {
                 ...state,
-                isLoading: true,
                 coinId: {
                     id: action.coinId.id,
                     image: action.coinId.image.small,

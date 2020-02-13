@@ -3,9 +3,12 @@ import './BreadScrum.css'
 import {NavLink} from "react-router-dom";
 
 const BreadScrum = (props) => {
+    console.log(props)
+
     return (
         <div className="breadscrum">
-            <NavLink to={'/'}>Home</NavLink> / {props.id}
+            {/*<span onClick={ ()=> props.history.goBack() }>Back</span> / {props.id}*/}
+            <NavLink to={'/page/5'}>Back</NavLink> / {props.id}
         </div>
     );
 };
