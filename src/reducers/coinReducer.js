@@ -45,11 +45,13 @@ const coinReducer = (state = initialState, action) =>{
             return {
                 ...state,
                 error: REQUEST_FAILED,
+                coinId: {isLoading: false}
             };
         case types.GET_COIN_SOMETHING_WRONG:
             return {
                 ...state,
                 error: SOMETHING_WENT_WRONG,
+                coinId: {isLoading: false}
             };
         case types.GET_COIN_FINISH:
             return {

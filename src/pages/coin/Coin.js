@@ -7,6 +7,7 @@ import {congeckoGetCoinId} from "../../api";
 import GraphicInfo from "../../components/GraphicInfo/GraphicInfo";
 import Loading from "../../components/Loading/Loading";
 import {connect} from "react-redux";
+import Error from "../../components/Error/Error";
 
 class Coin extends Component {
 
@@ -28,144 +29,142 @@ class Coin extends Component {
         }
 
         return (
-            <div className={'container'}>
-
-                {isLoading && <Loading/>}
-
-                <BreadScrum id={id}/>
-
-                <div>
-                    <div className="current-coin">
-                        <img src={image} alt=""/>
-                        <h2>{name}</h2>
-                        <span>{current_price} $</span>
-                    </div>
-
-                    <hr/>
-
-                    <div className="current-coin-info-wrap">
-                        <div className="current-coin-graphic">
-                            <GraphicInfo sparkline_7d={sparkline_7d}/>
+            !!this.props.error
+                ? <Error error={this.props.error}/>
+                : <div className={'container'}>
+                    <BreadScrum id={id}/>
+                    <div>
+                        <div className="current-coin">
+                            <img src={image} alt=""/>
+                            <h2>{name}</h2>
+                            <span>{current_price} $</span>
                         </div>
-                        <div className="current-coin-info">
-                            <h4>QUICK STATS</h4>
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <th><strong>Price</strong></th>
-                                    <td>
-                                        <NumberFormat
-                                            thousandSeparator={true}
-                                            suffix={' $'}
-                                            displayType={'text'}
-                                            value={current_price}
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><strong>Market Cap</strong></th>
-                                    <td>
-                                        <NumberFormat
-                                            thousandSeparator={true}
-                                            suffix={' $'}
-                                            displayType={'text'}
-                                            value={market_cap}
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><strong>Trading Volume</strong></th>
-                                    <td>
-                                        <NumberFormat
-                                            thousandSeparator={true}
-                                            suffix={' $'}
-                                            displayType={'text'}
-                                            value={total_volume}
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><strong>Volume / Market Cap</strong></th>
-                                    <td>{price_change_percentage_1h_in_currency}</td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <p><strong>24h Low</strong></p>
-                                        <p><strong>24h High</strong></p>
-                                    </th>
-                                    <td>
-                                        <p>
+
+                        <hr/>
+
+                        <div className="current-coin-info-wrap">
+                            <div className="current-coin-graphic">
+                                <GraphicInfo sparkline_7d={sparkline_7d}/>
+                            </div>
+                            <div className="current-coin-info">
+                                <h4>QUICK STATS</h4>
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <th><strong>Price</strong></th>
+                                        <td>
                                             <NumberFormat
                                                 thousandSeparator={true}
                                                 suffix={' $'}
                                                 displayType={'text'}
-                                                value={low_24h}
+                                                value={current_price}
                                             />
-                                        </p>
-                                        <p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th><strong>Market Cap</strong></th>
+                                        <td>
                                             <NumberFormat
                                                 thousandSeparator={true}
                                                 suffix={' $'}
                                                 displayType={'text'}
-                                                value={high_24h}
+                                                value={market_cap}
                                             />
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><strong>All-Time High</strong></th>
-                                    <td>
-                                        <p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th><strong>Trading Volume</strong></th>
+                                        <td>
                                             <NumberFormat
                                                 thousandSeparator={true}
                                                 suffix={' $'}
                                                 displayType={'text'}
-                                                value={ath}
+                                                value={total_volume}
                                             />
-                                        </p>
-                                        <p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th><strong>Volume / Market Cap</strong></th>
+                                        <td>{price_change_percentage_1h_in_currency}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <p><strong>24h Low</strong></p>
+                                            <p><strong>24h High</strong></p>
+                                        </th>
+                                        <td>
+                                            <p>
+                                                <NumberFormat
+                                                    thousandSeparator={true}
+                                                    suffix={' $'}
+                                                    displayType={'text'}
+                                                    value={low_24h}
+                                                />
+                                            </p>
+                                            <p>
+                                                <NumberFormat
+                                                    thousandSeparator={true}
+                                                    suffix={' $'}
+                                                    displayType={'text'}
+                                                    value={high_24h}
+                                                />
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th><strong>All-Time High</strong></th>
+                                        <td>
+                                            <p>
+                                                <NumberFormat
+                                                    thousandSeparator={true}
+                                                    suffix={' $'}
+                                                    displayType={'text'}
+                                                    value={ath}
+                                                />
+                                            </p>
+                                            <p>
                                             <span className={ath_change_percentage > 0 ? "text-green" : "text-danger"}>
                                                 {ath_change_percentage
                                                     ? (ath_change_percentage).toFixed(1)
                                                     : '?'}%
                                             </span>
-                                        </p>
-                                        <p>Date: <Moment format="D MMM YYYY" withTitle>{ath_date}</Moment></p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><strong>Rank Market Cap</strong></th>
-                                    <td>#{market_cap_rank}</td>
-                                </tr>
-                                <tr>
-                                    <th><strong>Max supply</strong></th>
-                                    <td>
-                                        {total_supply
-                                            ? <NumberFormat
+                                            </p>
+                                            <p>Date: <Moment format="D MMM YYYY" withTitle>{ath_date}</Moment></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th><strong>Rank Market Cap</strong></th>
+                                        <td>#{market_cap_rank}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><strong>Max supply</strong></th>
+                                        <td>
+                                            {total_supply
+                                                ? <NumberFormat
+                                                    thousandSeparator={true}
+                                                    suffix={' coins'}
+                                                    displayType={'text'}
+                                                    value={total_supply}/>
+                                                : '?'}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th><strong>Circulating supply</strong></th>
+                                        <td>
+                                            <NumberFormat
                                                 thousandSeparator={true}
                                                 suffix={' coins'}
                                                 displayType={'text'}
-                                                value={total_supply}/>
-                                            : '?'}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><strong>Circulating supply</strong></th>
-                                    <td>
-                                        <NumberFormat
-                                            thousandSeparator={true}
-                                            suffix={' coins'}
-                                            displayType={'text'}
-                                            value={circulating_supply}
-                                        />
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                                value={circulating_supply}
+                                            />
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
         );
     }
 }
@@ -189,8 +188,9 @@ const mapStateToProps = (store) => {
         circulating_supply: store.coinState.coinId.circulating_supply,
         sparkline_7d: store.coinState.coinId.sparkline_7d,
         isLoading: store.coinState.coinId.isLoading,
-        currentPage: store.coinState.currentPage
+        currentPage: store.coinState.currentPage,
+        error: store.coinState.error,
     }
 };
 
-export default connect(mapStateToProps, { congeckoGetCoinId })(Coin);
+export default connect(mapStateToProps, {congeckoGetCoinId})(Coin);

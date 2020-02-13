@@ -3,9 +3,9 @@ import {NavLink} from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
 import {congeckoGetPagination, congeckoGetCoins} from "../../api";
 import Pagination from "../../components/Pagination/Pagination";
-import {REQUEST_FAILED, SOMETHING_WENT_WRONG} from "../../api/axios/apiConstants";
 import {connect} from "react-redux";
 import {toggleLoading} from "../../actions/actionCoin";
+import Error from "../../components/Error/Error";
 
 const tableHeaders = ["Coin", "Price", "1h", "24h", "7d"];
 
@@ -34,11 +34,7 @@ class Home extends Component {
 
         return (
             !!this.props.error
-                ? <div className={'container error-api'}>
-                    {this.props.error === REQUEST_FAILED && <div>{REQUEST_FAILED}</div>}
-                    {this.props.error === SOMETHING_WENT_WRONG && <div>{SOMETHING_WENT_WRONG}</div>}
-                </div>
-
+                ? <Error error={this.props.error}/>
                 : <div className={'container'}>
                     <table>
                         <thead>
