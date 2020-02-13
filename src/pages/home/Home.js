@@ -13,7 +13,9 @@ class Home extends Component {
 
     componentDidMount() {
         this.props.toggleLoading(true);
-        this.props.congeckoGetCoins()
+        if(this.props.currentPage === 1){
+            this.props.congeckoGetCoins();
+        }
     }
 
     nextPage = (currentPage) => {
@@ -22,6 +24,7 @@ class Home extends Component {
     };
 
     render() {
+
         const {coins, isLoading} = this.props;
         const numberPages = Math.floor(this.props.totalResults / 30);
 

@@ -26,6 +26,8 @@ const initialState = {
             market_cap_rank: 0,
             total_supply: 0,
             circulating_supply: 0,
+            currentPage: 1,
+            isLoading: true
         }
 };
 

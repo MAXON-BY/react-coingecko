@@ -32,7 +32,7 @@ class Coin extends Component {
 
                 {isLoading && <Loading/>}
 
-                <BreadScrum history={this.props} id={id}/>
+                <BreadScrum id={id}/>
 
                 <div>
                     <div className="current-coin">
@@ -188,7 +188,8 @@ const mapStateToProps = (store) => {
         total_supply: store.coinState.coinId.total_supply,
         circulating_supply: store.coinState.coinId.circulating_supply,
         sparkline_7d: store.coinState.coinId.sparkline_7d,
-        isLoading: store.coinState.coinId.isLoading
+        isLoading: store.coinState.coinId.isLoading,
+        currentPage: store.coinState.currentPage
     }
 };
 

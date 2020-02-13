@@ -1,16 +1,32 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './BreadScrum.css'
-import {NavLink} from "react-router-dom";
+import {connect} from "react-redux";
+import {congeckoGetPagination} from "../../api";
+import {Link} from "react-router-dom";
 
-const BreadScrum = (props) => {
-    console.log(props)
+class BreadScrum extends Component {
 
-    return (
-        <div className="breadscrum">
-            {/*<span onClick={ ()=> props.history.goBack() }>Back</span> / {props.id}*/}
-            <NavLink to={'/page/5'}>Back</NavLink> / {props.id}
-        </div>
-    );
+    backPage = (currentPage) => {
+        this.props.congeckoGetPagination(currentPage)
+    };
+
+    render(){
+        const {currentPage} = this.props;
+
+        return (
+            <div className="breadscrum">
+                <Link to={`/page/${currentPage}`} onClick={ () => this.backPage(currentPage) }>Back</Link> / {this.props.id}
+            </div>
+        );
+    }
+
+}
+
+const mapStateToProps = (store) => {
+    return {
+        currentPage: store.coinState.currentPage,
+    }
 };
 
-export default BreadScrum;
+
+export default connect(mapStateToProps, {congeckoGetPagination})(BreadScrum);
